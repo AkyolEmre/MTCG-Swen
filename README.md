@@ -12,7 +12,7 @@ Dieses Projekt implementiert ein Monster Trading Cards Game (MTCG) mit einem HTT
 1. **Klonen des Repositories**
     ```bash
     git clone https://github.com/AkyolEmre/MTCG-Swen.git
-    cd dein-repository
+    cd MTCG-Swen
     ```
 
 2. **Abhängigkeiten installieren**
