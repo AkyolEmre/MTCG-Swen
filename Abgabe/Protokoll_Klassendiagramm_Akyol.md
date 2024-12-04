@@ -77,4 +77,4 @@ Das Klassendiagramm bildet eine solide Grundlage für die weitere Entwicklung de
 - Unit-Tests für die einzelnen Komponenten, um die Stabilität und Funktionalität des Systems zu überprüfen.
 
 ## 6. Github Repository Link
-[Link zum Repository](https://github.com/dein-benutzername/dein-repository)
+[Link zum Repository](https://github.com/AkyolEmre/MTCG-Swen)
