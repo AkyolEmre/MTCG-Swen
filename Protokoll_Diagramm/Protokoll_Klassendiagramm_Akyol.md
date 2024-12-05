@@ -31,61 +31,50 @@ Ziel dieser Implementierung war die Entwicklung eines Systems für einen HTTP-Se
 
 - **Modularität**: 
   - Das Klassendiagramm teilt die Verantwortung klar auf: Der HTTP-Server (`HttpSvr`) kümmert sich um die Kommunikation, während der **Datenhandler** für die spezifische Logik der Datenabfrage verantwortlich ist.
-  
+
 - **Fehlerbehandlung**: 
   - Um die Stabilität des Systems zu gewährleisten, sind alle relevanten Klassen mit einer robusten Fehlerbehandlung ausgestattet. Diese stellt sicher, dass fehlerhafte Anfragen oder Serverprobleme korrekt abgewickelt werden.
 
-## 3. Erweiterungen für das Monster Trading Card Game (MTCG)
+## 3. Nächste Schritte
 
-### 3.1 Karten-Elemente
+### 3.1 Kampf-Mechanismus weiterentwickeln
 
-- **Elemente (Wasser, Feuer, Erde, Normal)**: 
+- Implementierung einer detaillierteren Logik für den Kampf, die den Schaden basierend auf den Kartenelementen und deren Werten berechnet.
+
+### 3.2 Integration der Erweiterungen für das MTCG
+
+- **Karten-Elemente**:
   - Jede Karte wird einem bestimmten Element (z.B. Wasser, Feuer, Erde, Normal) zugeordnet. Diese Elemente beeinflussen, wie Karten im Kampf miteinander interagieren.
-  
-- **ElementType**:
-  - Eine Enumeration, die die verschiedenen Kartenelemente beschreibt: `Water`, `Fire`, `Earth`, `Normal`. Jede Karte erhält ein Attribut, das ihren Elementtyp festlegt.
-  
+  - Eine Enumeration `ElementType` beschreibt die verschiedenen Kartenelemente: `Water`, `Fire`, `Earth`, `Normal`. Jede Karte erhält ein Attribut, das ihren Elementtyp festlegt.
+
 - **Kampfmechanik**:
   - Es wird eine Logik implementiert, die den Kampf zwischen Karten regelt. Beispielsweise könnte `Fire` Wasser kontern, `Water` gegen `Fire` verlieren, `Earth` gegen `Water` gewinnen, und so weiter.
   - Ein `ElementInteractionHandler` wird hinzugefügt, um die Interaktionen zwischen verschiedenen Kartenelementen zu verwalten.
 
-### 3.2 Coins-Logik
-
-- **Coins**:
+- **Coins-Logik**:
   - Jede Transaktion oder jedes Spielereignis kann Coins generieren oder verbrauchen. Ein System zur Verwaltung von **Coins** wird eingeführt, das den Spielern ermöglicht, Coins zu verdienen, auszugeben und zu handeln.
-  
-- **CoinHandler**:
-  - Eine Klasse, die für die Handhabung der Coins verantwortlich ist. Sie enthält Methoden wie `EarnCoins`, `SpendCoins`, und `GetBalance`, um das Coinsystem zu verwalten.
+  - Eine Klasse `CoinHandler` wird erstellt, die Methoden wie `EarnCoins`, `SpendCoins`, und `GetBalance` zur Verwaltung des Coinsystems bereitstellt.
 
-### 3.3 Erweiterung der Kampfmechanik
+- **Erweiterte Kampf-Logik**:
+  - Ein `BattleLogic` wird erstellt, um den gesamten Kampfprozess zu verwalten, mit Methoden wie `DetermineWinner`, `CalculateDamage`, und `ApplyEffects`.
 
-- **Kampf-Logik**:
-  - Jeder Kampf zwischen zwei Karten erfolgt durch das Vergleichen ihrer Werte und ihrer Elementtypen. Eine neue Klasse `BattleLogic` wird erstellt, um den gesamten Kampfprozess zu verwalten.
-  - Beispielmethoden könnten sein: `DetermineWinner`, `CalculateDamage`, `ApplyEffects`.
+- **Benutzerverwaltung und Kartenverwaltung**:
+  - Ein `UserHandler` verwaltet die Benutzer und ihre Karten, ermöglicht es Spielern, Karten zu kaufen, zu tauschen und in Kämpfen einzusetzen.
+  - Ein `CardHandler` verwaltet die Kartensammlung, einschließlich Erstellen, Bearbeiten und Löschen von Karten.
 
-### 3.4 Benutzerverwaltung und Kartenverwaltung
+### 3.3 Integration von Benutzeraktionen
 
-- **UserHandler**:
-  - Ein **UserHandler** verwaltet die Benutzer und ihre Karten. Er ermöglicht es den Spielern, Karten zu kaufen, zu tauschen und in Kämpfen einzusetzen.
-  
-- **CardHandler**:
-  - Ein **CardHandler** verwaltet die Sammlung von Karten, die den Spielern zur Verfügung stehen, und ermöglicht das Erstellen, Bearbeiten oder Löschen von Karten.
-
-## 4. Nächste Schritte
-
-### 4.1 Kampf-Mechanismus weiterentwickeln
-- Implementierung einer detaillierteren Logik für den Kampf, die den Schaden basierend auf den Kartenelementen und deren Werten berechnet.
-
-### 4.2 Integration von Benutzeraktionen
 - Spieler sollen die Möglichkeit erhalten, Karten zu tauschen, zu kaufen oder zu verkaufen. Dazu wird eine Schnittstelle für die Benutzerverwaltung entwickelt.
 
-### 4.3 Erweiterung der Coins-Logik
+### 3.4 Erweiterung der Coins-Logik
+
 - Weitere Mechanismen für das Sammeln und Ausgeben von Coins einbauen, z.B. durch den Erwerb neuer Karten oder das Freischalten von zusätzlichen Spielinhalten.
 
-### 4.4 Sicherheit und Optimierung
+### 3.5 Sicherheit und Optimierung
+
 - Sicherheitsmaßnahmen einführen, um sicherzustellen, dass keine unbefugten Änderungen an den Coins oder Karten vorgenommen werden können.
 - Optimierung der Performance der Datenbankabfragen, um eine schnelle und skalierbare Benutzererfahrung zu ermöglichen.
 
-## 5. GitHub Repository
+## 4. GitHub Repository
 
 [Link zum Repository](https://github.com/AkyolEmre/MTCG-Swen)
