@@ -8,13 +8,10 @@ namespace Monster_Trading_Cards_Game {
     public sealed class User
     {
         private static readonly Dictionary<string, User> Users = new();
-
         private User() { }
-
         public string UserName { get; private set; } = string.Empty;
         public string FullName { get; set; } = string.Empty;
         public string EMail { get; set; } = string.Empty;
-        public int Coins { get; set; } = 20;
         public string? SessionToken { get; set; }
 
         private static readonly List<string> CardNames = new()
