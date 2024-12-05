@@ -14,12 +14,6 @@ namespace Monster_Trading_Cards_Game {
         public string EMail { get; set; } = string.Empty;
         public string? SessionToken { get; set; }
 
-        private static readonly List<string> CardNames = new()
-        {
-            "Goblins", "Dragons", "Wizzard", "Knights", "Orks", "Kraken", "FireElves", "Lion", "DogMike", "Rocklee",
-            "Tetsu", "Amaterasu", "Bankai", "Raijin", "Susanoo", "FighterKevin"
-        };
-
         public void Save(string token)
         {
             var auth = Token.Authenticate(token);
