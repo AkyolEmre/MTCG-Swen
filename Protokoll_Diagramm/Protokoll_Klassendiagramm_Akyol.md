@@ -4,7 +4,7 @@
 
 ## 1. Zielsetzung
 
-Ziel dieser Implementierung war die Entwicklung eines Systems für einen HTTP-Server, der Anfragen verarbeitet und Daten über HTTP-Methoden wie POST abruft. Zudem wurde die Grundlage für ein Monster Trading Card Game (MTCG) gelegt, das Elemente wie Kartentypen (Wasser, Feuer, etc.), Coins und die Kampfmechanik umfasst.
+Ziel dieser Implementierung war die Entwicklung eines Systems für einen HTTP-Server, der Anfragen verarbeitet und Daten über HTTP-Methoden wie POST abruft. Zudem wurde die Grundlage für ein Monster Trading Card Game (MTCG) gelegt, das Elemente wie Kartentypen (Wasser, Feuer, etc.), Coins und die Kampfmechanik umfasst. Darüber hinaus wurden fortlaufend neue Funktionen wie Benutzerverwaltung, Kartensystem und erweiterte Kampfmechaniken integriert.
 
 ## 2. Architektur
 
@@ -35,45 +35,50 @@ Ziel dieser Implementierung war die Entwicklung eines Systems für einen HTTP-Se
 - **Fehlerbehandlung**: 
   - Um die Stabilität des Systems zu gewährleisten, sind alle relevanten Klassen mit einer robusten Fehlerbehandlung ausgestattet. Diese stellt sicher, dass fehlerhafte Anfragen oder Serverprobleme korrekt abgewickelt werden.
 
-## 3. Nächste Schritte
-
-### 3.1 Kampf-Mechanismus weiterentwickeln
-
-- Implementierung einer detaillierteren Logik für den Kampf, die den Schaden basierend auf den Kartenelementen und deren Werten berechnet.
-
-### 3.2 Integration der Erweiterungen für das MTCG
-
-- **Karten-Elemente**:
-  - Jede Karte wird einem bestimmten Element (z.B. Wasser, Feuer, Erde, Normal) zugeordnet. Diese Elemente beeinflussen, wie Karten im Kampf miteinander interagieren.
-  - Eine Enumeration `ElementType` beschreibt die verschiedenen Kartenelemente: `Water`, `Fire`, `Earth`, `Normal`. Jede Karte erhält ein Attribut, das ihren Elementtyp festlegt.
+### 2.4 Erweiterung der Kampf- und Benutzerlogik
 
 - **Kampfmechanik**:
-  - Es wird eine Logik implementiert, die den Kampf zwischen Karten regelt. Beispielsweise könnte `Fire` Wasser kontern, `Water` gegen `Fire` verlieren, `Earth` gegen `Water` gewinnen, und so weiter.
-  - Ein `ElementInteractionHandler` wird hinzugefügt, um die Interaktionen zwischen verschiedenen Kartenelementen zu verwalten.
-
-- **Coins-Logik**:
-  - Jede Transaktion oder jedes Spielereignis kann Coins generieren oder verbrauchen. Ein System zur Verwaltung von **Coins** wird eingeführt, das den Spielern ermöglicht, Coins zu verdienen, auszugeben und zu handeln.
-  - Eine Klasse `CoinHandler` wird erstellt, die Methoden wie `EarnCoins`, `SpendCoins`, und `GetBalance` zur Verwaltung des Coinsystems bereitstellt.
-
-- **Erweiterte Kampf-Logik**:
-  - Ein `BattleLogic` wird erstellt, um den gesamten Kampfprozess zu verwalten, mit Methoden wie `DetermineWinner`, `CalculateDamage`, und `ApplyEffects`.
+  - Es wurde eine erweiterte Kampf-Logik implementiert, die den Schaden basierend auf den Kartenelementen und deren Werten berechnet.
+  - Ein `ElementInteractionHandler` wurde hinzugefügt, um die Interaktionen zwischen verschiedenen Kartenelementen zu verwalten. Hierbei beeinflussen die Elemente wie `Water` und `Fire` den Ausgang eines Kampfes.
 
 - **Benutzerverwaltung und Kartenverwaltung**:
-  - Ein `UserHandler` verwaltet die Benutzer und ihre Karten, ermöglicht es Spielern, Karten zu kaufen, zu tauschen und in Kämpfen einzusetzen.
-  - Ein `CardHandler` verwaltet die Kartensammlung, einschließlich Erstellen, Bearbeiten und Löschen von Karten.
+  - Die `User`-Klasse verwaltet Benutzerinformationen wie Benutzername, Coins, Kartensammlung und Session-Token.
+  - Ein `UserHandler` wurde entwickelt, der Methoden zur Verwaltung der Benutzer, wie das Erstellen neuer Benutzer und das Authentifizieren über Tokens, bereitstellt.
 
-### 3.3 Integration von Benutzeraktionen
+- **Coins-Logik**:
+  - Eine `CoinHandler`-Klasse wurde eingeführt, die Methoden wie `EarnCoins`, `SpendCoins`, und `GetBalance` zur Verwaltung des Coinsystems bereitstellt.
+  - Jede Transaktion oder jedes Spielereignis kann Coins generieren oder verbrauchen.
 
-- Spieler sollen die Möglichkeit erhalten, Karten zu tauschen, zu kaufen oder zu verkaufen. Dazu wird eine Schnittstelle für die Benutzerverwaltung entwickelt.
+### 2.5 Kartensystem und Elemente
 
-### 3.4 Erweiterung der Coins-Logik
+- **Karten-Elemente**:
+  - Jede Karte wurde einem bestimmten Element zugeordnet (z.B. Wasser, Feuer, Erde, Normal). Diese Elemente beeinflussen, wie Karten im Kampf miteinander interagieren.
+  - Eine Enumeration `ElementType` beschreibt die verschiedenen Kartenelemente: `Water`, `Fire`, `Earth`, `Normal`.
 
-- Weitere Mechanismen für das Sammeln und Ausgeben von Coins einbauen, z.B. durch den Erwerb neuer Karten oder das Freischalten von zusätzlichen Spielinhalten.
+- **Kartenmanagement**:
+  - Das Kartenmanagement umfasst die Erstellung, Bearbeitung und Löschung von Karten. Jede Karte hat einen Namen, einen Basiswert für den Schaden und einen Elementtyp, der im Kampf verwendet wird.
 
-### 3.5 Sicherheit und Optimierung
+## 3. Nächste Schritte
 
-- Sicherheitsmaßnahmen einführen, um sicherzustellen, dass keine unbefugten Änderungen an den Coins oder Karten vorgenommen werden können.
-- Optimierung der Performance der Datenbankabfragen, um eine schnelle und skalierbare Benutzererfahrung zu ermöglichen.
+### 3.1 Erweiterung der Kampf-Logik
+
+- Weitere Mechanismen zur Schadensermittlung und zum Anwendung von Effekten auf Karten im Kampf implementieren.
+- Integration eines `BattleLogic`-Handlers zur Verwaltung von Kämpfen und zur Berechnung des Schadens in Abhängigkeit von den Kartenelementen.
+
+### 3.2 Erweiterung der Benutzerfunktionen
+
+- Implementierung von Funktionen zum Tauschen, Kaufen und Verkaufen von Karten innerhalb der Benutzeroberfläche.
+- Sicherstellen, dass Benutzer mit einer einfachen Schnittstelle ihre Karten und Coins verwalten können.
+
+### 3.3 Erweiterung der Coins-Logik
+
+- Erweiterung der Mechanismen für das Sammeln und Ausgeben von Coins, z.B. durch das Freischalten neuer Karten oder das Gewinnen von Duellen.
+- Einführung von Sicherheitsmaßnahmen, um die Coins und Karten vor unbefugten Änderungen zu schützen.
+
+### 3.4 Optimierungen und Performance
+
+- Weitere Optimierungen der Server- und Datenbankstruktur, um die Performance bei größeren Datenmengen zu verbessern und die Skalierbarkeit zu gewährleisten.
+- Implementierung zusätzlicher Sicherheitsprotokolle für die Kommunikation zwischen Server und Client.
 
 ## 4. GitHub Repository
 
