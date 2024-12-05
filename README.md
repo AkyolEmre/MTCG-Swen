@@ -57,4 +57,4 @@ Dieses Projekt implementiert ein Monster Trading Cards Game (MTCG) mit einem HTT
 - Unit-Tests für die einzelnen Komponenten, um die Stabilität und Funktionalität des Systems zu überprüfen.
 
 ## Autor
-- **Akyol Emre** - Initialarbeit
+- **Akyol Emre**
