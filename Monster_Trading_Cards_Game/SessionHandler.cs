@@ -1,5 +1,4 @@
-﻿using Monster_Trading_Cards_Game;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text.Json.Nodes;
 
@@ -11,20 +10,15 @@ namespace Monster_Trading_Cards_Game
 
         public override bool Handle(HttpSvrEventArgs e)
         {
-            // Überprüfe auf den /sessions-Endpunkt mit POST-Methode
             if (e.Path.TrimEnd('/', ' ', '\t') == "/sessions" && e.Method == "POST")
             {
                 return HandleSessionPost(e);
             }
-
             return false;
         }
 
         private bool HandleSessionPost(HttpSvrEventArgs e)
         {
-            JsonObject? reply;
-            int status = HttpStatusCode.BAD_REQUEST;
-
             try
             {
                 JsonNode? json = JsonNode.Parse(e.Payload);
@@ -34,28 +28,22 @@ namespace Monster_Trading_Cards_Game
                     string password = json["password"]!.ToString();
 
                     var result = User.Logon(username, password);
-
                     if (result.Success)
                     {
                         return HandleSuccessfulLogin(e, result.Token, username);
                     }
-                    else
-                    {
-                        status = HttpStatusCode.UNAUTHORIZED;
-                        reply = CreateResponse(false, "Logon failed.");
-                    }
+
+                    e.Reply(HttpStatusCode.UNAUTHORIZED, CreateResponse(false, "Logon failed.").ToJsonString());
                 }
                 else
                 {
-                    reply = CreateResponse(false, "Invalid request format.");
+                    e.Reply(HttpStatusCode.BAD_REQUEST, CreateResponse(false, "Invalid request format.").ToJsonString());
                 }
             }
-            catch (Exception)
+            catch
             {
-                reply = CreateResponse(false, "Invalid request.");
+                e.Reply(HttpStatusCode.BAD_REQUEST, CreateResponse(false, "Invalid request.").ToJsonString());
             }
-
-            e.Reply(status, reply?.ToJsonString());
             return true;
         }
 
@@ -70,12 +58,10 @@ namespace Monster_Trading_Cards_Game
                 ["token"] = token
             };
 
-            var headers = new Dictionary<string, string>
+            e.Reply(HttpStatusCode.OK, reply.ToJsonString(), new Dictionary<string, string>
             {
                 { "Authorization", $"Bearer {token}" }
-            };
-
-            e.Reply(HttpStatusCode.OK, reply.ToJsonString(), headers);
+            });
             return true;
         }
 
