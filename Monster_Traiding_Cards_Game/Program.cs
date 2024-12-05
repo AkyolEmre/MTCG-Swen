@@ -1,5 +1,4 @@
 ﻿using System;
-using Monster_Trading_Cards_Game.Models;
 using Monster_Trading_Cards_Game;
 
 
@@ -27,11 +26,11 @@ namespace Monster_Trading_Cards_Game
         /// <param name="args">Command line arguments.</param>
         static void Main(string[] args)
         {
-            HttpSvr svr = new(); // neue scheibweise. System erkennt automatisch was Sache ist.
-            svr.Incoming += Svr_Incoming; //(sender, e) => { Handler.HandleEvent(e); };
+            HttpSvr svr = new();
+            svr.Incoming += Svr_Incoming;
 
             svr.Run();
-            Console.WriteLine("Server läuft auf http://127.0.0.1:12000\"");
+            Console.WriteLine("Ready -> http://127.0.0.1:12000\"");
         }
 
 
@@ -56,35 +55,3 @@ namespace Monster_Trading_Cards_Game
         }
     }
 }
-
-
-
-
-//Eigene Klasse für Deck erstellen und dort die Logig schon mal einbauen 
-
-
-/*
-
-
-Summary
-   
-
-   1. `Program.cs` – Einstiegspunkt, initialisiert und startet den Server.
-   2. `HttpSvr.cs` – Server-Logik, verarbeitet TCP-Anfragen.
-   3. `HttpSvrEventHandler.cs` – Delegat, verbindet Ereignisse mit Methoden.
-   4. `HttpSvrEventArgs.cs` – Stellt Daten für Ereignisse bereit.
-   5. `HttpHeader.cs` – Analysiert und speichert HTTP-Header.
-   6. `HttpStatusCodes.cs` – Definiert HTTP-Statuscodes.
-   7. `IHandler.cs`– Schnittstelle für Handler-Klassen.
-   8. `Handler.cs` – Abstrakte Klasse, die Handler-Logik koordiniert.
-   9. `UserHandler.cs` – Bearbeitet Benutzer-bezogene Anfragen.
-   10. `User.cs`– Repräsentiert Benutzer, enthält Methoden für Benutzerverwaltung.
-   11. `Token.cs` – Sicherheitslogik, erstellt und überprüft Tokens.
-   12. `SessionHandler.cs` – Verarbeitet Sitzungs-bezogene Anfragen (z. B. Login).
-   13. `UserException.cs` – Behandelt benutzerdefinierte Ausnahmen.
-   
- 
-
-*/
-
-

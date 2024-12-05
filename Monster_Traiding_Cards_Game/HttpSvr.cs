@@ -1,4 +1,4 @@
-﻿using Monster_Trading_Cards_Game;
+﻿﻿using Monster_Trading_Cards_Game;
 using System;
 using System.Net;
 using System.Net.Sockets;
@@ -47,9 +47,7 @@ namespace Monster_Trading_Cards_Game
 
             while (Active)
             {
-                Console.WriteLine("Waiting for a connection...");
                 TcpClient client = _Listener.AcceptTcpClient();
-                Console.WriteLine("Connection accepted!");
 
                 try
                 {

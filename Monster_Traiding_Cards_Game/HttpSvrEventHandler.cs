@@ -1,6 +1,5 @@
 ﻿using System;
 
-//3)
 
 namespace Monster_Trading_Cards_Game
 {

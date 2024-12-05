@@ -1,5 +1,4 @@
 ﻿using Monster_Trading_Cards_Game;
-using Monster_Trading_Cards_Game.Models;
 using Monster_Trading_Cards_Game.Exceptions;
 using System;
 using System.Text.Json.Nodes;
@@ -204,7 +203,6 @@ namespace Monster_Trading_Cards_Game
 
             if (ses.Success)
             {
-                ses.User!.AddPackage();
                 status = HttpStatusCode.OK;
                 reply = new JsonObject()
                 {
@@ -235,7 +233,6 @@ namespace Monster_Trading_Cards_Game
 
             if (ses.Success)
             {
-                ses.User!.ChooseDeck();
                 status = HttpStatusCode.OK;
                 reply = new JsonObject()
                 {
