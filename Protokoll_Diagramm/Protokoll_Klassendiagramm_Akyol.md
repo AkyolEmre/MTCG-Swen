@@ -1,80 +1,91 @@
 # Protokoll zur Implementierung des Klassendiagramms
 
+@Author - Akyol Emre
+
 ## 1. Zielsetzung
-Das Ziel dieser Arbeit war die Entwicklung eines Klassendiagramms zur Modellierung einer Anwendung, die folgende Hauptaspekte umfasst:
-- Verwaltung von Benutzern und Sitzungen
-- Implementierung eines HTTP-Servers
-- Abbildung von Spielkarten und einer Battle-Logik für ein Monster Trading Card Game (MCTG).
 
-## 2. Vorgehensweise
+Ziel dieser Implementierung war die Entwicklung eines Systems für einen HTTP-Server, der Anfragen verarbeitet und Daten über HTTP-Methoden wie POST abruft. Zudem wurde die Grundlage für ein Monster Trading Card Game (MTCG) gelegt, das Elemente wie Kartentypen (Wasser, Feuer, etc.), Coins und die Kampfmechanik umfasst.
 
-### 2.1 Design der Hauptklassen
-- **Card (Abstrakte Klasse)**:
-  - Modelliert allgemeine Eigenschaften und Methoden von Karten, wie `Damage` und `CardElementType`.
-  - Spezifische Kartenarten (`NormalCard`, `SpellCard`, `MonsterCard`) erben von der Basisklasse `Card`.
-  - Methoden wie `PlayCard` und `AssignDamage` wurden definiert, um das Verhalten von Karten zu steuern.
+## 2. Architektur
 
-- **User**:
-  - Repräsentiert einen Benutzer mit Attributen wie `UserName`, `Deck`, `Coins` und `SessionToken`.
-  - Enthält Methoden zur Verwaltung von Benutzerdaten wie `AddPackage`, `CreateCard` und `Logon`.
+### 2.1 HTTP-Server
 
-- **Battle**:
-  - Implementiert die Logik für Kämpfe zwischen zwei Spielern (`Player1` und `Player2`).
-  - Enthält Methoden wie `Start` und `Play` zur Durchführung der Kämpfe.
-
-### 2.2 Implementierung des HTTP-Servers
-- **HttpSvr**:
-  - Implementiert grundlegende Serverfunktionen wie `Run` und `Stop`.
-  - Verarbeitet eingehende Anfragen mit der Methode `Incoming`.
+- **HttpSvr**: 
+  - Implementiert die Serverfunktionalität. Die Methoden `Run` und `Stop` steuern den Start und das Stoppen des Servers.
+  - Die Methode `Incoming` verarbeitet eingehende HTTP-Anfragen und leitet diese an die entsprechenden Handler weiter.
 
 - **HttpHeader und HttpStatusCode**:
-  - Dienen zur Verwaltung und Interpretation von HTTP-Headern und Statuscodes.
+  - **HttpHeader** verwaltet die HTTP-Header, die bei der Verarbeitung der Anfragen benötigt werden.
+  - **HttpStatusCode** dient zur Verwaltung und Interpretation der Statuscodes, die als Antwort an den Client gesendet werden.
 
-### 2.3 Session- und Benutzerverwaltung
-- **Handler (Abstrakte Klasse)**:
-  - Definiert die Basislogik für verschiedene Handler wie `SessionHandler` und `UserHandler`.
-  - Methoden wie `HandleEvent` wurden implementiert, um eingehende Ereignisse zu verarbeiten.
+### 2.2 Datenabfrage
 
-- **SessionHandler**:
-  - Verarbeitet aktive Benutzersitzungen und enthält Methoden wie `GetUsernameFromSession`.
+- **Datenhandler**: 
+  - Diese Klasse verarbeitet Anfragen zur Datenabfrage. Sie empfängt POST-Anfragen, analysiert die angeforderten Daten und führt entsprechende Aktionen aus.
+  - Beispielmethoden könnten `GetData` oder `ProcessData` sein, die auf eingehende Anfragen reagieren.
+
+- **Verarbeitung der Anfragen**:
+  - Die Methode `Incoming` im **HttpSvr** leitet die eingehenden HTTP-Anfragen an den **Datenhandler** weiter. Dieser sorgt dafür, dass die angeforderten Daten verarbeitet und dem Client zurückgegeben werden.
+
+### 2.3 Design-Entscheidungen
+
+- **Modularität**: 
+  - Das Klassendiagramm teilt die Verantwortung klar auf: Der HTTP-Server (`HttpSvr`) kümmert sich um die Kommunikation, während der **Datenhandler** für die spezifische Logik der Datenabfrage verantwortlich ist.
+  
+- **Fehlerbehandlung**: 
+  - Um die Stabilität des Systems zu gewährleisten, sind alle relevanten Klassen mit einer robusten Fehlerbehandlung ausgestattet. Diese stellt sicher, dass fehlerhafte Anfragen oder Serverprobleme korrekt abgewickelt werden.
+
+## 3. Erweiterungen für das Monster Trading Card Game (MTCG)
+
+### 3.1 Karten-Elemente
+
+- **Elemente (Wasser, Feuer, Erde, Normal)**: 
+  - Jede Karte wird einem bestimmten Element (z.B. Wasser, Feuer, Erde, Normal) zugeordnet. Diese Elemente beeinflussen, wie Karten im Kampf miteinander interagieren.
+  
+- **ElementType**:
+  - Eine Enumeration, die die verschiedenen Kartenelemente beschreibt: `Water`, `Fire`, `Earth`, `Normal`. Jede Karte erhält ein Attribut, das ihren Elementtyp festlegt.
+  
+- **Kampfmechanik**:
+  - Es wird eine Logik implementiert, die den Kampf zwischen Karten regelt. Beispielsweise könnte `Fire` Wasser kontern, `Water` gegen `Fire` verlieren, `Earth` gegen `Water` gewinnen, und so weiter.
+  - Ein `ElementInteractionHandler` wird hinzugefügt, um die Interaktionen zwischen verschiedenen Kartenelementen zu verwalten.
+
+### 3.2 Coins-Logik
+
+- **Coins**:
+  - Jede Transaktion oder jedes Spielereignis kann Coins generieren oder verbrauchen. Ein System zur Verwaltung von **Coins** wird eingeführt, das den Spielern ermöglicht, Coins zu verdienen, auszugeben und zu handeln.
+  
+- **CoinHandler**:
+  - Eine Klasse, die für die Handhabung der Coins verantwortlich ist. Sie enthält Methoden wie `EarnCoins`, `SpendCoins`, und `GetBalance`, um das Coinsystem zu verwalten.
+
+### 3.3 Erweiterung der Kampfmechanik
+
+- **Kampf-Logik**:
+  - Jeder Kampf zwischen zwei Karten erfolgt durch das Vergleichen ihrer Werte und ihrer Elementtypen. Eine neue Klasse `BattleLogic` wird erstellt, um den gesamten Kampfprozess zu verwalten.
+  - Beispielmethoden könnten sein: `DetermineWinner`, `CalculateDamage`, `ApplyEffects`.
+
+### 3.4 Benutzerverwaltung und Kartenverwaltung
 
 - **UserHandler**:
-  - Zuständig für die Benutzerverwaltung, einschließlich Methoden wie `HandleAddPackage` und `HandleGetUser`.
+  - Ein **UserHandler** verwaltet die Benutzer und ihre Karten. Er ermöglicht es den Spielern, Karten zu kaufen, zu tauschen und in Kämpfen einzusetzen.
+  
+- **CardHandler**:
+  - Ein **CardHandler** verwaltet die Sammlung von Karten, die den Spielern zur Verfügung stehen, und ermöglicht das Erstellen, Bearbeiten oder Löschen von Karten.
 
-### 2.4 Token-Management
-- **Token (Statische Klasse)**:
-  - Verarbeitet die Authentifizierung von Benutzern mittels Tokens.
-  - Enthält Methoden wie `CreateTokenFor` und `Authenticate`.
+## 4. Nächste Schritte
 
-### 2.5 Erweiterung des Systems
-- **Round**:
-  - Ergänzt die Battle-Logik durch die Abbildung einzelner Runden.
+### 4.1 Kampf-Mechanismus weiterentwickeln
+- Implementierung einer detaillierteren Logik für den Kampf, die den Schaden basierend auf den Kartenelementen und deren Werten berechnet.
 
-- **Enumerationen und Delegates**:
-  - `ElementType` zur Modellierung von Kartenelementtypen wie `Water`, `Fire`, `Normal`.
-  - `HttpSvrEventHandler` zur Definition von Ereignisverarbeitern im HTTP-Server.
+### 4.2 Integration von Benutzeraktionen
+- Spieler sollen die Möglichkeit erhalten, Karten zu tauschen, zu kaufen oder zu verkaufen. Dazu wird eine Schnittstelle für die Benutzerverwaltung entwickelt.
 
-## 3. Herausforderungen
-- **Komplexität der Vererbung**:
-  - Die Vererbungshierarchie zwischen `Card` und deren Unterklassen musste klar definiert werden, um zukünftige Erweiterungen zu erleichtern.
+### 4.3 Erweiterung der Coins-Logik
+- Weitere Mechanismen für das Sammeln und Ausgeben von Coins einbauen, z.B. durch den Erwerb neuer Karten oder das Freischalten von zusätzlichen Spielinhalten.
 
-- **Sitzungsmanagement**:
-  - Die Synchronisation aktiver Sitzungen stellte sicher, dass Benutzer eindeutig identifiziert werden können.
+### 4.4 Sicherheit und Optimierung
+- Sicherheitsmaßnahmen einführen, um sicherzustellen, dass keine unbefugten Änderungen an den Coins oder Karten vorgenommen werden können.
+- Optimierung der Performance der Datenbankabfragen, um eine schnelle und skalierbare Benutzererfahrung zu ermöglichen.
 
-- **HTTP-Kommunikation**:
-  - Die Implementierung eines effizienten Request-Response-Mechanismus war entscheidend, um die Systemstabilität zu gewährleisten.
+## 5. GitHub Repository
 
-## 4. Ergebnisse
-Das Klassendiagramm bildet eine solide Grundlage für die weitere Entwicklung der Anwendung. Es wurden folgende zentrale Funktionalitäten modelliert:
-- Benutzerverwaltung
-- Sitzungs- und Authentifizierungslogik
-- HTTP-Server und Header-Management
-- Spielkarten und Battle-Mechanik
-
-## 5. Nächste Schritte
-- Implementierung der Logik für spezielle Kartenfähigkeiten und deren Auswirkungen im Kampf.
-- Integration von Sicherheitsmechanismen zur Sicherstellung der Datenintegrität.
-- Unit-Tests für die einzelnen Komponenten, um die Stabilität und Funktionalität des Systems zu überprüfen.
-
-## 6. Github Repository Link
 [Link zum Repository](https://github.com/AkyolEmre/MTCG-Swen)
