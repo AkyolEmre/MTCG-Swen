@@ -1,5 +1,6 @@
 # MTCG
 von Emre Akyol
+
 Github-Link: https://github.com/AkyolEmre/MTCG-Swen
 
 ## Design
@@ -32,4 +33,22 @@ Der angemeldete User kann einmal am Tag am Glücksrad drehen und bis zu 10 Coins
 ## Lessons learned
 Der Teil, bei dem ich die meisten Schwierigkeiten hatte, war das Konzept und der Aufbau des Projekts. Obwohl das grobe Ziel klar war, wusste ich nicht, wie ich die verschiedenen Bereiche effizient trenne und diese trotzdem miteinander kommunizieren lasse. Zuerst hatte ich mir für die Card-Klassen ein Strategy-Pattern überlegt ohne an die einfache Vererbung einer abstrakten Klasse zu denken. Dieser Denkfehler hat mich die längste Zeit gekostet. Des weiteren ist mir aufgefallen, dass ich meist zu lange über kommende Funktionen nachgedacht habe und wie ich diese am besten vorbereite, statt in kleinen Schritten zu beginnen und darauf aufzubauen. 
 
-Insgesamt hat das Projekt um die ~57 Stunden gedauert
+### Aufwand und Zeit
+
+| Datum      | Zeit    |
+| ---------- | ------- |
+| 13.12.2024 | 2h      |
+| 15.12.2024 | 3h 30m  |
+| 18.12.2024 | 4h      |
+| 22.12.2024 | 2h 15m  |
+| 28.12.2024 | 5h      |
+| 02.01.2025 | 6h      |
+| 05.01.2025 | 4h 45m  |
+| 09.01.2025 | 3h      |
+| 12.01.2025 | 2h 30m  |
+| 15.01.2025 | 5h 15m  |
+| 18.01.2025 | 7h      |
+| 20.01.2025 | 5h      |
+| **Summe**  | **61h** |
+
+Insgesamt hat das Projekt um die ~61 Stunden gedauert.
