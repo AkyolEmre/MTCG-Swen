@@ -1,60 +1,35 @@
-# Monster Trading Cards Game (MTCG)
+# MTCG
+von Emre Akyol
+Github-Link: https://github.com/AkyolEmre/MTCG-Swen
 
-## Einleitung
-Dieses Projekt implementiert ein Monster Trading Cards Game (MTCG) mit einem HTTP-Server, der Benutzern ermöglicht, sich zu registrieren, anzumelden und Kartenkämpfe durchzuführen.
+## Design
+Um Ordnung im Projekt zu garantieren, werden Ordner benutzt, um verschiedene Tätigkeitsbereiche zu trennen. Auch auf die Ordnung innerhalb der Klassen wurde geachtet, indem gezielt Attribute, Konstanten und Methoden in ihre jeweilige Klasse (bzw Methode) zugeteilt wurden. Ein UML Diagramm zum Projekt befindet sich im Design-Ordner
 
-## Voraussetzungen
-- .NET 6.0 SDK: [Download .NET 6.0 SDK](https://dotnet.microsoft.com/download/dotnet/6.0)
-- Visual Studio Code oder Visual Studio
-- PlantUML und Graphviz (optional für UML-Diagramme)
+### GameClasses
+Der GameClasses Ordner beinhaltet alle Klassen, die für das Spiel selbst wichtig sind. Klassen wie `User.cs` und die Card-Klassen befinden sich hier.
+Für die Card Klassen wurde die Vererbung einer abstrakten Klasse verwendet, bei dem eine Karte entweder ein Monster oder ein Spell sein kann.
+Die Klasse `Battle.cs` kümmert sich um den Ablauf der Kämpfe zwischen zwei Usern und entscheidet anschließend den Gewinner.
 
-## Installation
-1. **Klonen des Repositories**
-    ```bash
-    git clone https://github.com/AkyolEmre/MTCG-Swen.git
-    cd MTCG-Swen
-    ```
+### Http
+Im http Ordner befinden sich die Klassen, die für die Server-Client Kommunikation zuständig sind.
 
-2. **Abhängigkeiten installieren**
-    ```bash
-    dotnet restore
-    ```
+Dazu zählen:
+  * `HttpServer.cs` - Server, welcher auf Clients Connetions wartet
+  * `HttpRequest.cs` - Klasse, welche die Requests vom Client verarbeitet
+  * `HttpResponse.cs` - Klasse, welche die Response zurückgibt, basierend auf dem Request vom Client
 
-## Ausführen des Projekts
-1. **Visual Studio Code öffnen**
-    - Öffne Visual Studio Code und lade das geklonte Repository.
+### Database
+Die Database Klasse dient ausschließlich der Datenbankverbindung und der Manipulation der Daten in der Datenbank. Es war gedacht, einfache Dictionaries als Ersatz für die Datenbank zu nutzen, bis diese aufgesetzt wurde. Als schließlich die ersten Probleme und Komplikationen auftraten war ich gezwungen, die Datenbank zu erstellen und auf diese umzusteigen.
 
-2. **Starten des Servers**
-    - Öffne die `Program.cs`-Datei und stelle sicher, dass die `Main`-Methode korrekt auf deinen `HttpSvr` zeigt.
-    - Starte das Projekt mit `F5` oder durch Klicken auf das grüne Play-Symbol in Visual Studio Code.
+### Testing
+Für jeden Anwendungsbereich gibt es eine eigene Testklasse, welche die wichtigsten Funktionen testet. Somit können geziehlte Bereiche getestet werden und für Ordnung gesorgt werden. Die verschiedenen Testfälle wurden so gewählt, dass die richtige Funktionsweise der Hauptfunktionen der Klassen getestet werden.
 
-3. **Testen der Endpunkte**
-    - Verwende Postman oder cURL, um die Endpunkte zu testen.
-    - Beispiel für die Registrierung eines neuen Benutzers:
-        ```bash
-        curl -X POST http://localhost:12000/register -d "username=testuser&password=1234"
-        ```
-    - Beispiel für das Anmelden eines Benutzers:
-        ```bash
-        curl -X POST http://localhost:12000/login -d "username=testuser&password=1234"
-        ```
+### Unique feature
+*Daily Wheelspin*
 
-## UML-Diagramme erstellen (optional)
-1. **PlantUML und Graphviz installieren**
-    - PlantUML Extension für Visual Studio Code installieren
-    - Graphviz installieren: [Download Graphviz](https://graphviz.gitlab.io/_pages/Download/Download_windows.html)
+Der angemeldete User kann einmal am Tag am Glücksrad drehen und bis zu 10 Coins gewinnen. Nach dem dreh kann erst am darauffolgenden Tag erneut gedreht werden.
 
-2. **UML-Diagramm generieren**
-    - Erstelle eine Datei `diagram.puml` und füge deinen PlantUML-Code hinzu.
-    - Öffne die Datei in Visual Studio Code und drücke `Alt + D`, um das Diagramm anzuzeigen.
+## Lessons learned
+Der Teil, bei dem ich die meisten Schwierigkeiten hatte, war das Konzept und der Aufbau des Projekts. Obwohl das grobe Ziel klar war, wusste ich nicht, wie ich die verschiedenen Bereiche effizient trenne und diese trotzdem miteinander kommunizieren lasse. Zuerst hatte ich mir für die Card-Klassen ein Strategy-Pattern überlegt ohne an die einfache Vererbung einer abstrakten Klasse zu denken. Dieser Denkfehler hat mich die längste Zeit gekostet. Des weiteren ist mir aufgefallen, dass ich meist zu lange über kommende Funktionen nachgedacht habe und wie ich diese am besten vorbereite, statt in kleinen Schritten zu beginnen und darauf aufzubauen. 
 
-## Github Repository Link
-[Link zum Repository](https://github.com/AkyolEmre/MTCG-Swen)
-
-## Nächste Schritte
-- Implementierung der Logik für spezielle Kartenfähigkeiten und deren Auswirkungen im Kampf.
-- Integration von Sicherheitsmechanismen zur Sicherstellung der Datenintegrität.
-- Unit-Tests für die einzelnen Komponenten, um die Stabilität und Funktionalität des Systems zu überprüfen.
-
-## Autor
-- **Akyol Emre**
+Insgesamt hat das Projekt um die ~57 Stunden gedauert
